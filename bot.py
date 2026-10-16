@@ -342,8 +342,16 @@ async def receive_receipt(message: Message, state: FSMContext):
                    f"Состав заказа:\n{order['items']}")
         for admin_id in ADMIN_IDS:
             try:
-                photo_bytes = BytesIO()
-                await bot.download(file_id, destination=photo_bytes)
+                from aiogram.types import BufferedInputFile
+
+photo = BytesIO(...)
+await bot.send_photo(
+    chat_id=admin_id,
+    photo=BufferedInputFile(
+        photo.getvalue(),
+        filename="receipt.jpg"
+    )
+)
                 photo_bytes.seek(0)
                 photo_bytes.name = f"receipt_{order_id}.jpg"
                 await order_bot.send_photo(admin_id, photo_bytes, caption=caption[:1024], reply_markup=kb)
