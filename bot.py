@@ -15,7 +15,7 @@ from aiogram.fsm.context import FSMContext
 from dotenv import load_dotenv
 
 load_dotenv()
-TOKEN = os.getenv("8888350385:AAFvLRbA4ZVAEDjcz0yNWir8eDNhj6abCdQ", "").strip()
+TOKEN = os.getenv("BOT_TOKEN", "").strip()
 ADMIN_IDS = {int(x.strip()) for x in os.getenv("8894506763", "").split(",") if x.strip().isdigit()}
 PAYMENT_DETAILS = os.getenv("PAYMENT_DETAILS", "Укажите реквизиты в файле .env")
 SHOP_NAME = os.getenv("SHOP_NAME", "Maskset")
