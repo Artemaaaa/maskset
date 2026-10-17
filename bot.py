@@ -2,7 +2,8 @@ import asyncio
 import os
 import sqlite3
 from io import BytesIO
-from aiogram.types import BufferedInputFilefrom datetime import datetime
+from aiogram.types import BufferedInputFile
+from datetime import datetime
 from html import escape
 
 from aiogram import Bot, Dispatcher, F
