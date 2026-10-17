@@ -341,7 +341,7 @@ async def receive_receipt(message: Message, state: FSMContext):
                    f"Сумма: {money(order['total'])}\n"
                    f"Статус: {order['status']}\n\n"
                    f"Состав заказа:\n{order['items']}")
-                for admin_id in ADMIN_IDS:
+            for admin_id in ADMIN_IDS:
             try:
                 photo_bytes = BytesIO()
                 await bot.download(file_id, destination=photo_bytes)
