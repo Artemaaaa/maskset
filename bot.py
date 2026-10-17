@@ -341,22 +341,22 @@ async def receive_receipt(message: Message, state: FSMContext):
                    f"Сумма: {money(order['total'])}\n"
                    f"Статус: {order['status']}\n\n"
                    f"Состав заказа:\n{order['items']}")
-        for admin_id in ADMIN_IDS:
+                for admin_id in ADMIN_IDS:
             try:
                 photo_bytes = BytesIO()
-await bot.download(file_id, destination=photo_bytes)
+                await bot.download(file_id, destination=photo_bytes)
 
-await order_bot.send_photo(
-    chat_id=admin_id,
-    photo=BufferedInputFile(
-        photo_bytes.getvalue(),
-        filename="receipt.jpg"
-    ),
-    caption=caption,
-    reply_markup=kb
-)
+                await order_bot.send_photo(
+                    chat_id=admin_id,
+                    photo=BufferedInputFile(
+                        photo_bytes.getvalue(),
+                        filename="receipt.jpg"
+                    ),
+                    caption=caption,
+                    reply_markup=kb
+                )
             except Exception as exc:
-                print(f"Не удалось отправить заказ №{order_id} администратору {admin_id}: {exc}")
+                print(f"Ошибка отправки заказа: {exc}")
     await state.clear()
     await message.answer(f"Чек по заказу №{order_id} получен. Ожидайте подтверждения оплаты.", reply_markup=main_keyboard())
 
