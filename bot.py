@@ -2,7 +2,7 @@ import asyncio
 import os
 import sqlite3
 from io import BytesIO
-from datetime import datetime
+from aiogram.types import BufferedInputFilefrom datetime import datetime
 from html import escape
 
 from aiogram import Bot, Dispatcher, F
@@ -342,19 +342,18 @@ async def receive_receipt(message: Message, state: FSMContext):
                    f"Состав заказа:\n{order['items']}")
         for admin_id in ADMIN_IDS:
             try:
-                from aiogram.types import BufferedInputFile
+                photo_bytes = BytesIO()
+await bot.download(file_id, destination=photo_bytes)
 
-photo = BytesIO(...)
-await bot.send_photo(
+await order_bot.send_photo(
     chat_id=admin_id,
     photo=BufferedInputFile(
-        photo.getvalue(),
+        photo_bytes.getvalue(),
         filename="receipt.jpg"
-    )
+    ),
+    caption=caption,
+    reply_markup=kb
 )
-                photo_bytes.seek(0)
-                photo_bytes.name = f"receipt_{order_id}.jpg"
-                await order_bot.send_photo(admin_id, photo_bytes, caption=caption[:1024], reply_markup=kb)
             except Exception as exc:
                 print(f"Не удалось отправить заказ №{order_id} администратору {admin_id}: {exc}")
     await state.clear()
